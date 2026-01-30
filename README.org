@@ -1,0 +1,87 @@
+#+title:    :tools majutsu
+#+subtitle: Jujutsu in Emacs
+#+created:  January 31, 2026
+#+since:    0.0.0
+
+* Description :unfold:
+This module provides Majutsu, an Emacs interface to the Jujutsu (jj)
+version control system. It adds Doom keybindings and integrates with
+Doom workspaces so Majutsu buffers behave like other real buffers.
+
+** Maintainers
+- [[doom-user:][@0WD0]]
+
+** Module flags
+- None.
+
+** Packages
+- [[doom-package:majutsu]]
+- [[doom-package:magit]]
+
+** Hacks
+- Adds Majutsu buffers to =doom-real-buffer-functions= so they are treated as
+  real buffers by Doom workspaces/persp.
+
+** Changelog
+No changelog yet.
+
+* Installation
+[[id:01cffea4-3329-45e2-a892-95a384ab2338][Enable this module in your ~doom!~ block.]]
+
+#+begin_src emacs-lisp
+(doom!
+ :tools
+ majutsu)
+#+end_src
+
+Then run =doom sync= and restart Emacs.
+
+This module requires:
+- [[https://github.com/martinvonz/jj][Jujutsu (jj)]]
+
+* Usage
+Start Majutsu with [[kbd:][<leader> j j]] (~M-x majutsu~).
+
+Keybindings (evil):
+- [[kbd:][<leader> j j]]  -> majutsu log (main entrance)
+- [[kbd:][<leader> j c]]  -> describe
+- [[kbd:][<leader> j C]]  -> commit
+- [[kbd:][<leader> j d]]  -> diff current change
+
+If you do not use Evil, call the commands with ~M-x~.
+
+* Configuration
+** Set the jj executable
+#+begin_src emacs-lisp
+(after! majutsu
+  (setq majutsu-jj-executable "jj"))
+#+end_src
+
+** Display behavior
+#+begin_src emacs-lisp
+(after! majutsu
+  (setq majutsu-display-buffer-function #'majutsu-display-buffer-traditional))
+#+end_src
+
+** Quit behavior
+#+begin_src emacs-lisp
+(after! majutsu
+  (setq majutsu-bury-buffer-function #'majutsu-mode-quit-window))
+#+end_src
+
+* Troubleshooting
+** Majutsu says jj is missing
+Ensure =jj= is installed and in PATH, or set =majutsu-jj-executable=.
+
+** Buffers disappear from workspaces
+Make sure =:ui workspaces= is enabled. This module marks Majutsu buffers
+as real buffers so they are kept in the current workspace.
+
+* Frequently asked questions
+** Does this require Magit?
+Yes. Majutsu uses Magit internals (e.g. magit-mode and magit-diff) and
+expects Magit to be installed. Because jj is git-compatible, Majutsu
+and Magit are expected to coexist and work together.
+
+* Appendix
+None.
