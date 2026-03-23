@@ -2,12 +2,7 @@
 
 ;; Declare autoloaded commands via use-package! for lazy loading
 (use-package! majutsu
-  :defer-incrementally (dash f s with-editor package eieio transient)
-  :config
-  (set-popup-rule! "^\\*majutsu" :ignore t)
-  (setq dired-omit-files
-        (concat dired-omit-files
-                "\\|^\\.\\(?:jj\\)\\'")))
+  :defer-incrementally (dash f s with-editor package eieio transient))
 
 ;; Keybindings: `SPC j` prefix (evil leader)
 (when (modulep! :editor evil)
